@@ -1,2 +1,5 @@
 # Ignora los archivos relacionados a API keys
 .env
+
+#Ignora una carpeta
+GRUPO_8_PROYECTO_FINAL_FRONTEND
