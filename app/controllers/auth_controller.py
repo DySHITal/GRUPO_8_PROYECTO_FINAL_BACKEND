@@ -1,5 +1,5 @@
 from ..models.usuario_model import Usuario
-from flask import request, session
+from flask import request, session, jsonify
 
 class UsuarioController:
 
@@ -8,11 +8,11 @@ class UsuarioController:
         data = request.json
         usuario = Usuario(
             correo = data.get('correo'),
-            contrasena = data.get('contrasena')
+            contrasena = data.get('contrasena'),
         )
 
         if Usuario.is_registered(usuario):
-            session['alias'] = data.get('alias')
+            session['correo'] = data.get('correo')
             return {'msg': 'Sesion iniciada'}, 200
         else:
             return {'msg':'Usuario o contraseña incorrectos'}, 401
@@ -21,3 +21,12 @@ class UsuarioController:
     def logout(cls):
         session.pop('alias', None)
         return {'msg':'Sesion cerrada'}, 200
+
+    @classmethod
+    def getAlias(cls):
+        alias = session.get('correo')
+        usuario = Usuario.get(Usuario(correo = alias))
+        if usuario is None:
+            return {'msg': 'Usuario no encontrado'}, 404
+        else:
+            return usuario.serialize(), 200

@@ -47,8 +47,17 @@ class Usuario:
         query = '''SELECT id_usuario FROM tertulia.usuarios WHERE correo = %(correo)s AND contrasena = %(contrasena)s'''
         params = usuario.__dict__
         result = DatabaseConnection.fetch_one(query, params=params)
-        print(params)
-        print(result)
         if result is not None:
             return True
         return False
+
+    @classmethod
+    def get(cls, usuario):
+        query = """SELECT * FROM tertulia.usuarios 
+        WHERE correo = %(correo)s"""
+        params = usuario.__dict__
+        result = DatabaseConnection.fetch_one(query, params=params)
+
+        if result is not None:
+            return cls(alias = result[3])
+        return None

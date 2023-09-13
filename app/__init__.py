@@ -2,6 +2,7 @@ from flask import Flask
 from config import Config
 from flask_cors import CORS
 from .routes.auth_bp import auth_bp
+from .routes.user_bp import user_bp
 from .database import DatabaseConnection
 
 def init_app():
@@ -11,4 +12,5 @@ def init_app():
     app.config.from_object(Config)
     DatabaseConnection.set_config(app.config)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(user_bp)
     return app
