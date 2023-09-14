@@ -52,7 +52,7 @@ class Usuario:
         return False
 
     @classmethod
-    def get(cls, usuario):
+    def get_alias(cls, usuario):
         query = """SELECT * FROM tertulia.usuarios 
         WHERE correo = %(correo)s"""
         params = usuario.__dict__
