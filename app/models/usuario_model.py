@@ -61,3 +61,15 @@ class Usuario:
         if result is not None:
             return cls(alias = result[3])
         return None
+    @classmethod
+    def get_serverUsuario(cls,usuario):
+        query="""SELECT s.* FROM servidor s
+                 JOIN UsuarioServidor us ON s.id = us.servidor_id
+                 WHERE us.usuario_id = %(id_usuario)s;"""
+        params = usuario.__dict__
+        result = DatabaseConnection.fetch_all(query,params=params)
+        
+        if result is not None:
+            return cls(alias = result[3])
+        return None        
+        
