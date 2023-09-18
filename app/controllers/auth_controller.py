@@ -33,7 +33,7 @@ class UsuarioController:
             return usuario.serialize(), 200
 
     @classmethod
-    def register(cls):                  #recibe fechas_nacimiento como NULL...
+    def register(cls):                  
         data = request.json
         usuario = Usuario(
             correo = data.get('correo'),
@@ -41,7 +41,7 @@ class UsuarioController:
             nombre = data.get('nombre'),
             apellido = data.get('apellido'),
             contrasena = data.get('contrasena'),
-            fechas_nacimiento = data.get('date')
+            fechas_nacimiento = data.get('fechas_nacimiento')
         )
         if usuario is not None:
             Usuario.register_user(usuario)

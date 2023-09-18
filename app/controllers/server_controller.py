@@ -10,7 +10,7 @@ class ServerController:
         if servers is not None:
             return servers.serialize(), 200
         else:
-            return {'msg':'Únete a un servidor'}, 404
+            return {'msg':'No existen servidores'}, 404
 
     # @classmethod ---- es lo mismo que la función anterior
     # def getServersUsuario(cls):
