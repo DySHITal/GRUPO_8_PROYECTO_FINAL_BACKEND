@@ -3,7 +3,7 @@ from dotenv import dotenv_values
 class Config:
     config = dotenv_values('.env')
 
-    SECRET_KEY = config['SECRET_KEY']
+    SECRET_KEY = '0d4fce41c1b5cfe3404c8e6ac402fba644fdd88982d8a1f4ec178888dcd5764d'
     SERVER_NAME = "127.0.0.1:5000"
     DEBUG = True
 
