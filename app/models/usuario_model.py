@@ -62,7 +62,7 @@ class Usuario:
             return cls(alias = result[3])
         return None
     @classmethod
-    def get_serverUsuario(cls,usuario):
+    def get_serverUsuario(cls,usuario):                  #no está implementado
         query="""SELECT s.* FROM servidor s
                  JOIN UsuarioServidor us ON s.id = us.servidor_id
                  WHERE us.usuario_id = %(id_usuario)s;"""
@@ -73,3 +73,9 @@ class Usuario:
             return cls(alias = result[3])
         return None        
         
+    @classmethod
+    def register_user(cls, usuario):
+        query="""INSERT INTO tertulia.usuarios(nombre, apellido, alias, fechas_nacimiento, correo, contrasena)
+        VALUES(%(nombre)s, %(apellido)s, %(alias)s, %(fechas_nacimiento)s, %(correo)s, %(contrasena)s);"""
+        params = usuario.__dict__
+        DatabaseConnection.execute_query(query, params=params)

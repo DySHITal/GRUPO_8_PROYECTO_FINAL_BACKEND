@@ -31,4 +31,21 @@ class UsuarioController:
             return {'msg': 'Usuario no encontrado'}, 404
         else:
             return usuario.serialize(), 200
+
+    @classmethod
+    def register(cls):                  #recibe fechas_nacimiento como NULL...
+        data = request.json
+        usuario = Usuario(
+            correo = data.get('correo'),
+            alias = data.get('alias'),
+            nombre = data.get('nombre'),
+            apellido = data.get('apellido'),
+            contrasena = data.get('contrasena'),
+            fechas_nacimiento = data.get('date')
+        )
+        if usuario is not None:
+            Usuario.register_user(usuario)
+            return {'msg': 'Usuario Registrado exitosamente'}, 200
+        else:
+            return {'msg', 'Todos los campos deben estar completados'}
     
