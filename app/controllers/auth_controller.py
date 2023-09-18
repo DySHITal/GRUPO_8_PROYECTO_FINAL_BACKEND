@@ -31,19 +31,4 @@ class UsuarioController:
             return {'msg': 'Usuario no encontrado'}, 404
         else:
             return usuario.serialize(), 200
-
-    @classmethod
-    def getServers(cls):
-        servers = Server.get_server()
-        if servers is not None:
-            return servers.serialize(), 200
-        else:
-            return {'msg':'Únete a un servidor'}, 404
-        
-    @classmethod
-    def getServersUsuario(cls):
-        servers = Server.get_server()
-        if servers is not None:
-            return servers.serialize(), 200
-        else:
-            return {'msg':'Únete a un servidor'}, 404
+    
