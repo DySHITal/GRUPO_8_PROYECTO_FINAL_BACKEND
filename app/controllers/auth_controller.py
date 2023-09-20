@@ -1,7 +1,7 @@
 from ..models.usuario_model import Usuario
 from flask import request, session, jsonify
 
-class UsuarioController:
+class AuthController:
 
     @classmethod
     def login(cls):
@@ -22,11 +22,4 @@ class UsuarioController:
         session.pop('alias', None)
         return {'msg':'Sesion cerrada'}, 200
 
-    @classmethod
-    def getAlias(cls):
-        alias = session.get('correo')
-        usuario = Usuario.get(Usuario(correo = alias))
-        if usuario is None:
-            return {'msg': 'Usuario no encontrado'}, 404
-        else:
-            return usuario.serialize(), 200
+    
