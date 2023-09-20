@@ -1,4 +1,3 @@
-from ..models.usuario_model import Usuario
 from ..models.server_model import Server
 from flask import request, session, jsonify
 
