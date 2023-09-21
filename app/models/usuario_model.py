@@ -3,18 +3,6 @@ from ..database import DatabaseConnection
 class Usuario:
     '''Modelo para la clase usuario'''
 
-    # def __init__(self, id_usuario = None, nombre = None, apellido = None, alias = None, fechas_nacimiento = None, correo = None, contrasena = None, avatar = None, estado = None):
-    #     '''Constructor method'''
-    #     self.id_usuario = id_usuario
-    #     self.nombre = nombre
-    #     self.apellido = apellido
-    #     self.alias = alias
-    #     self.fechas_nacimiento = fechas_nacimiento
-    #     self.correo = correo
-    #     self.contrasena = contrasena
-    #     self.avatar = avatar
-    #     self.estado = estado
-
     def __init__(self, **kwargs):
         self.id_usuario = kwargs.get('id_usuario')
         self.nombre = kwargs.get('nombre')
@@ -48,7 +36,9 @@ class Usuario:
         params = usuario.__dict__
         result = DatabaseConnection.fetch_one(query, params=params)
         if result is not None:
+            DatabaseConnection.close_connection()
             return True
+        DatabaseConnection.close_connection()
         return False
 
     @classmethod
@@ -57,9 +47,10 @@ class Usuario:
         WHERE correo = %(correo)s"""
         params = usuario.__dict__
         result = DatabaseConnection.fetch_one(query, params=params)
-
         if result is not None:
+            DatabaseConnection.close_connection()
             return cls(alias = result[3])
+        DatabaseConnection.close_connection()
         return None
 
         
@@ -69,3 +60,4 @@ class Usuario:
         VALUES(%(nombre)s, %(apellido)s, %(alias)s, %(fechas_nacimiento)s, %(correo)s, %(contrasena)s);"""
         params = usuario.__dict__
         DatabaseConnection.execute_query(query, params=params)
+        DatabaseConnection.close_connection()

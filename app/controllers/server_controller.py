@@ -21,12 +21,5 @@ class ServerController:
              return servers.serialize(), 200
          else:
              return {'msg':'Únete a un servidor'}, 404
-    
-    # @classmethod
-    # def crearServer(cls):
-    #     servers = Server.crearServer()
-    #     if servers is not None:
-    #         return servers.serialize(), 200
-    #     else:
-    #         return {'msg':'No existen servidores'}, 404
+
     
