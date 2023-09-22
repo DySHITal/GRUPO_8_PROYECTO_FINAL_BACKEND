@@ -25,16 +25,12 @@ class ServerController:
     @classmethod
     def crearServer(cls):
         correo = session.get('correo')
-        print(correo)
         data = request.json
-        print(data)
         servidor= Server(
             nombre_servidor = data.get('server_name'),
             descripcion= data.get('server_descripcion')
         )
-        print(servidor)
         usuario = Usuario(correo=correo)
-        print(usuario)
         if servidor is not None:
             Server.create_server(servidor, usuario)
             return {'msg': 'Server Registrado exitosamente'}, 200

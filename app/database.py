@@ -3,6 +3,7 @@ from config import Config
 class DatabaseConnection:
     _connection = None
     _config = None
+    _cursor = None
     @classmethod
     def get_connection(cls):
         if cls._connection is None:
@@ -37,6 +38,8 @@ class DatabaseConnection:
         return cursor.fetchall()
     @classmethod
     def close_connection(cls):
+        if cls._cursor is not None:
+            cls._cursor.close()
         if cls._connection is not None:
             cls._connection.close()
             cls._connection = None

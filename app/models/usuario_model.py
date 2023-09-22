@@ -32,32 +32,41 @@ class Usuario:
 
     @classmethod
     def is_registered(cls, usuario):
-        query = '''SELECT id_usuario FROM tertulia.usuarios WHERE correo = %(correo)s AND contrasena = %(contrasena)s'''
-        params = usuario.__dict__
-        result = DatabaseConnection.fetch_one(query, params=params)
-        if result is not None:
+        try:
+            query = '''SELECT id_usuario FROM tertulia.usuarios WHERE correo = %(correo)s AND contrasena = %(contrasena)s'''
+            params = usuario.__dict__
+            result = DatabaseConnection.fetch_one(query, params=params)
+            if result is not None:
+                DatabaseConnection.close_connection()
+                return True
             DatabaseConnection.close_connection()
-            return True
-        DatabaseConnection.close_connection()
-        return False
+            return False
+        except Exception as e:
+            raise Exception(e)
 
     @classmethod
     def get_alias(cls, usuario):
-        query = """SELECT * FROM tertulia.usuarios 
-        WHERE correo = %(correo)s"""
-        params = usuario.__dict__
-        result = DatabaseConnection.fetch_one(query, params=params)
-        if result is not None:
+        try:
+            query = """SELECT * FROM tertulia.usuarios 
+            WHERE correo = %(correo)s"""
+            params = usuario.__dict__
+            result = DatabaseConnection.fetch_one(query, params=params)
+            if result is not None:
+                DatabaseConnection.close_connection()
+                return cls(alias = result[3])
             DatabaseConnection.close_connection()
-            return cls(alias = result[3])
-        DatabaseConnection.close_connection()
-        return None
+            return None
+        except Exception as e:
+            raise Exception(e)
 
         
     @classmethod
     def register_user(cls, usuario):
-        query="""INSERT INTO tertulia.usuarios(nombre, apellido, alias, fechas_nacimiento, correo, contrasena)
-        VALUES(%(nombre)s, %(apellido)s, %(alias)s, %(fechas_nacimiento)s, %(correo)s, %(contrasena)s);"""
-        params = usuario.__dict__
-        DatabaseConnection.execute_query(query, params=params)
-        DatabaseConnection.close_connection()
+        try:
+            query="""INSERT INTO tertulia.usuarios(nombre, apellido, alias, fechas_nacimiento, correo, contrasena)
+            VALUES(%(nombre)s, %(apellido)s, %(alias)s, %(fechas_nacimiento)s, %(correo)s, %(contrasena)s);"""
+            params = usuario.__dict__
+            DatabaseConnection.execute_query(query, params=params)
+            DatabaseConnection.close_connection()
+        except Exception as e:
+            raise Exception(e)

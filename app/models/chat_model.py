@@ -17,13 +17,19 @@ class Chat:
         }
 
     def get_mensajes(cls, mensajes):
-        query = """SELECT mensaje FROM tertulia.mensajes WHERE canal = %(mensaje)s"""
-        params = mensajes.__dict__
-        result = DatabaseConnection.fetch_all(query, params=params)
-        return result
+        try:
+            query = """SELECT mensaje FROM tertulia.mensajes WHERE canal = %(mensaje)s"""
+            params = mensajes.__dict__
+            result = DatabaseConnection.fetch_all(query, params=params)
+            return result
+        except Exception as e:
+            raise Exception(e)
 
     def post_mensajes(cls, mensajes):
-        query = """INSERT INTO tertulia.mensajes(mensaje, canal)
-        VALUES(%(mensaje)s, %(canal)s, )"""
-        params = mensajes.__dict__
-        DatabaseConnection.execute_query(query, params=params)
+        try:
+            query = """INSERT INTO tertulia.mensajes(mensaje, canal)
+            VALUES(%(mensaje)s, %(canal)s, )"""
+            params = mensajes.__dict__
+            DatabaseConnection.execute_query(query, params=params)
+        except Exception as e:
+            raise Exception(e)
