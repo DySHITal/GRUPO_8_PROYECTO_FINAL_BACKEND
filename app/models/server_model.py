@@ -41,7 +41,7 @@ class Server:
         return None
 
     @classmethod
-    def create_server(cls, usuario):
+    def create_server(cls, servidor , usuario):
         query = """START TRANSACTION;
 
         INSERT INTO servidor (nombre_servidor, fecha_creacion, descripcion)
@@ -54,6 +54,11 @@ class Server:
 
         COMMIT;
         """ 
-        params = usuario.__dict__
+        params = {
+        'server_name': servidor.nombre_servidor,
+        'server_description': servidor.descripcion,
+        'correo': usuario.correo 
+    }
+        print(params)
         DatabaseConnection.execute_query(query, params=params)
         DatabaseConnection.close_connection()

@@ -21,5 +21,24 @@ class ServerController:
              return servers.serialize(), 200
          else:
              return {'msg':'Únete a un servidor'}, 404
+         
+    @classmethod
+    def crearServer(cls):
+        correo = session.get('correo')
+        print(correo)
+        data = request.json
+        print(data)
+        servidor= Server(
+            nombre_servidor = data.get('server_name'),
+            descripcion= data.get('server_descripcion')
+        )
+        print(servidor)
+        usuario = Usuario(correo=correo)
+        print(usuario)
+        if servidor is not None:
+            Server.create_server(servidor, usuario)
+            return {'msg': 'Server Registrado exitosamente'}, 200
+        else:
+            return {'msg', 'Todos los campos deben estar completados'}, 400
 
     
