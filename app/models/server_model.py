@@ -30,6 +30,22 @@ class Server:
             raise Exception(e)
     
     @classmethod
+    def get_id_server(cls, nombre_servidor):
+        try:
+            query= "SELECT id_servidor FROM servidor WHERE nombre_servidor = %s"
+            result = DatabaseConnection.fetch_one(query,(nombre_servidor,))
+            if result is not None:
+                DatabaseConnection.close_connection()
+                id_servidor = result[0]
+                print(id_servidor,"server")
+                return id_servidor
+            DatabaseConnection.close_connection()
+            return None
+        except Exception as e:
+            raise Exception(e)
+        
+    
+    @classmethod
     def get_serverUsuario(cls,usuario): 
         try:                 
             query="""SELECT s.nombre_servidor FROM servidor s
