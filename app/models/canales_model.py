@@ -17,7 +17,7 @@ class Canales:
     @classmethod
     def get_canales(cls, id_servidor):
         try:
-            query = 'SELECT nombre_canal FROM canales WHERE id_servidor = %s'
+            query = """SELECT nombre_canal FROM canales WHERE id_servidor = %s"""
             params = (id_servidor,)
             result = DatabaseConnection.fetch_all(query, params)
             if result is not None:
