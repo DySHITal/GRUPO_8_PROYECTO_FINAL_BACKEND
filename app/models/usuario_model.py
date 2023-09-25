@@ -63,10 +63,24 @@ class Usuario:
     @classmethod
     def register_user(cls, usuario):
         try:
-            query="""INSERT INTO tertulia.usuarios(nombre, apellido, alias, fechas_nacimiento, correo, contrasena)
-            VALUES(%(nombre)s, %(apellido)s, %(alias)s, %(fechas_nacimiento)s, %(correo)s, %(contrasena)s);"""
+            query="""INSERT INTO tertulia.usuarios(nombre, apellido, alias, fechas_nacimiento, correo, contrasena, avatar)
+            VALUES(%(nombre)s, %(apellido)s, %(alias)s, %(fechas_nacimiento)s, %(correo)s, %(contrasena)s, %(avatar)s);"""
             params = usuario.__dict__
             DatabaseConnection.execute_query(query, params=params)
             DatabaseConnection.close_connection()
         except Exception as e:
             raise Exception(e)
+
+    @classmethod
+    def get_id_usuario(cls, correo):
+        try:
+            query = 'SELECT id_usuario FROM usuarios WHERE correo = %s'
+            result = DatabaseConnection.fetch_one(query, (correo,))
+            if result is not None:
+                DatabaseConnection.close_connection()
+                id_usuario = result[0]
+                return id_usuario
+            DatabaseConnection.close_connection()
+            return None
+        except Exception as e:
+            Exception(e)
