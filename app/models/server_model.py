@@ -37,7 +37,6 @@ class Server:
             if result is not None:
                 DatabaseConnection.close_connection()
                 id_servidor = result[0]
-                print(id_servidor,"server")
                 return id_servidor
             DatabaseConnection.close_connection()
             return None

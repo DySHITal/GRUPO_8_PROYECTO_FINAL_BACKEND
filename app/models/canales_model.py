@@ -27,3 +27,17 @@ class Canales:
             return None
         except Exception as e:
             raise Exception(e)
+
+    @classmethod
+    def get_id_canal(cls, nombre_canal):
+        try:
+            query = 'SELECT id_canales FROM canales WHERE nombre_canal = %s'
+            result = DatabaseConnection.fetch_one(query,(nombre_canal,))
+            if result is not None:
+                DatabaseConnection.close_connection()
+                id_canal = result[0]
+                return id_canal
+            DatabaseConnection.close_connection()
+            return None
+        except Exception as e:
+            raise Exception(e)

@@ -16,20 +16,24 @@ class Chat:
             'canal':self.canal
         }
 
-    def get_mensajes(cls, mensajes):
+    @classmethod
+    def get_mensajes(cls, id_canales):
         try:
-            query = """SELECT mensaje FROM tertulia.mensajes WHERE canal = %(mensaje)s"""
-            params = mensajes.__dict__
+            query = """SELECT mensaje FROM tertulia.mensajes WHERE canal = %s"""
+            params = (id_canales,)
             result = DatabaseConnection.fetch_all(query, params=params)
+            DatabaseConnection.close_connection()
             return result
         except Exception as e:
             raise Exception(e)
 
-    def post_mensajes(cls, mensajes):
+    @classmethod
+    def post_mensajes(cls, message, id_canal):
         try:
-            query = """INSERT INTO tertulia.mensajes(mensaje, canal)
-            VALUES(%(mensaje)s, %(canal)s, )"""
-            params = mensajes.__dict__
+            query = """INSERT INTO tertulia.mensajes(mensaje, fecha_envio, canal)
+            VALUES(%(mensaje)s, CURDATE(), %(id_canal)s)"""
+            params = {'mensaje':message.mensaje, 'id_canal':id_canal}
             DatabaseConnection.execute_query(query, params=params)
+            DatabaseConnection.close_connection()
         except Exception as e:
             raise Exception(e)
