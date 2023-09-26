@@ -1,6 +1,5 @@
 from ..models.usuario_model import Usuario
 from flask import request, session, jsonify
-
 class UsuarioController:
 
     @classmethod
@@ -21,10 +20,11 @@ class UsuarioController:
             nombre = data.get('nombre'),
             apellido = data.get('apellido'),
             contrasena = data.get('contrasena'),
-            fechas_nacimiento = data.get('fechas_nacimiento')
+            fechas_nacimiento = data.get('fechas_nacimiento'),
+            avatar = data.get('avatar')
         )
         if usuario is not None:
             Usuario.register_user(usuario)
-            return {'msg': 'Usuario Registrado exitosamente'}, 200
+            return jsonify({'msg': 'Usuario Registrado exitosamente'}), 200
         else:
-            return {'msg', 'Todos los campos deben estar completados'}, 400
+            return jsonify({'msg', 'Todos los campos deben estar completados'}), 400

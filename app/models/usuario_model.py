@@ -3,18 +3,6 @@ from ..database import DatabaseConnection
 class Usuario:
     '''Modelo para la clase usuario'''
 
-    # def __init__(self, id_usuario = None, nombre = None, apellido = None, alias = None, fechas_nacimiento = None, correo = None, contrasena = None, avatar = None, estado = None):
-    #     '''Constructor method'''
-    #     self.id_usuario = id_usuario
-    #     self.nombre = nombre
-    #     self.apellido = apellido
-    #     self.alias = alias
-    #     self.fechas_nacimiento = fechas_nacimiento
-    #     self.correo = correo
-    #     self.contrasena = contrasena
-    #     self.avatar = avatar
-    #     self.estado = estado
-
     def __init__(self, **kwargs):
         self.id_usuario = kwargs.get('id_usuario')
         self.nombre = kwargs.get('nombre')
@@ -44,38 +32,55 @@ class Usuario:
 
     @classmethod
     def is_registered(cls, usuario):
-        query = '''SELECT id_usuario FROM tertulia.usuarios WHERE correo = %(correo)s AND contrasena = %(contrasena)s'''
-        params = usuario.__dict__
-        result = DatabaseConnection.fetch_one(query, params=params)
-        if result is not None:
-            return True
-        return False
+        try:
+            query = '''SELECT id_usuario FROM tertulia.usuarios WHERE correo = %(correo)s AND contrasena = %(contrasena)s'''
+            params = usuario.__dict__
+            result = DatabaseConnection.fetch_one(query, params=params)
+            if result is not None:
+                DatabaseConnection.close_connection()
+                return True
+            DatabaseConnection.close_connection()
+            return False
+        except Exception as e:
+            raise Exception(e)
 
     @classmethod
     def get_alias(cls, usuario):
-        query = """SELECT * FROM tertulia.usuarios 
-        WHERE correo = %(correo)s"""
-        params = usuario.__dict__
-        result = DatabaseConnection.fetch_one(query, params=params)
+        try:
+            query = """SELECT * FROM tertulia.usuarios 
+            WHERE correo = %(correo)s"""
+            params = usuario.__dict__
+            result = DatabaseConnection.fetch_one(query, params=params)
+            if result is not None:
+                DatabaseConnection.close_connection()
+                return cls(alias = result[3])
+            DatabaseConnection.close_connection()
+            return None
+        except Exception as e:
+            raise Exception(e)
 
-        if result is not None:
-            return cls(alias = result[3])
-        return None
-    @classmethod
-    def get_serverUsuario(cls,usuario):                  #no está implementado
-        query="""SELECT s.* FROM servidor s
-                 JOIN UsuarioServidor us ON s.id = us.servidor_id
-                 WHERE us.usuario_id = %(id_usuario)s;"""
-        params = usuario.__dict__
-        result = DatabaseConnection.fetch_all(query,params=params)
-        
-        if result is not None:
-            return cls(alias = result[3])
-        return None        
         
     @classmethod
     def register_user(cls, usuario):
-        query="""INSERT INTO tertulia.usuarios(nombre, apellido, alias, fechas_nacimiento, correo, contrasena)
-        VALUES(%(nombre)s, %(apellido)s, %(alias)s, %(fechas_nacimiento)s, %(correo)s, %(contrasena)s);"""
-        params = usuario.__dict__
-        DatabaseConnection.execute_query(query, params=params)
+        try:
+            query="""INSERT INTO tertulia.usuarios(nombre, apellido, alias, fechas_nacimiento, correo, contrasena, avatar)
+            VALUES(%(nombre)s, %(apellido)s, %(alias)s, %(fechas_nacimiento)s, %(correo)s, %(contrasena)s, %(avatar)s);"""
+            params = usuario.__dict__
+            DatabaseConnection.execute_query(query, params=params)
+            DatabaseConnection.close_connection()
+        except Exception as e:
+            raise Exception(e)
+
+    @classmethod
+    def get_id_usuario(cls, correo):
+        try:
+            query = 'SELECT id_usuario FROM usuarios WHERE correo = %s'
+            result = DatabaseConnection.fetch_one(query, (correo,))
+            if result is not None:
+                DatabaseConnection.close_connection()
+                id_usuario = result[0]
+                return id_usuario
+            DatabaseConnection.close_connection()
+            return None
+        except Exception as e:
+            Exception(e)

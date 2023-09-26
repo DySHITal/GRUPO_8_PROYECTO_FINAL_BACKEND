@@ -6,5 +6,7 @@ user_bp = Blueprint('user_bp', __name__)
 
 user_bp.route('/alias', methods=['GET'])(UsuarioController.getAlias)
 user_bp.route('/cargar_servidores', methods=['GET'])(ServerController.getServers)
-# user_bp.route('/servidores_del_usuario', methods=['GET'])(ServerController.getServersUsuario)
+user_bp.route('/servidores_del_usuario', methods=['GET'])(ServerController.getServersUsuario)
 user_bp.route('/register', methods=['GET','POST'])(UsuarioController.register)
+user_bp.route('/crear_server', methods=['GET','POST'])(ServerController.crearServer)
+user_bp.route('/registrar_db/<string:nombre_servidor>', methods=['POST'])(ServerController.regServer)
