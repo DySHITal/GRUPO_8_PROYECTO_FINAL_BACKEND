@@ -1,5 +1,6 @@
 from ..models.chat_model import Chat
 from ..models.canales_model import Canales
+from ..models.usuario_model import Usuario
 from flask import request, session, jsonify
 
 class ChatController:
@@ -27,3 +28,14 @@ class ChatController:
             return {'msg':'success'}, 200
         else:
             return {'msg':'No hay mensaje'}, 400
+        
+    @classmethod
+    def getMensajesUsuario(cls, nombre_canal):
+        correo = session.get('correo')
+        id_usuario = Usuario.get_id_usuario(correo)
+        print(id_usuario)
+        mensaje = Chat.get_mensajesUsuario(id_usuario)
+        if mensaje is not None:
+            return mensaje, 200
+        else:
+            return {'msg':'Empty'}

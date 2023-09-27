@@ -10,6 +10,15 @@ class UsuarioController:
             return {'msg': 'Usuario no encontrado'}, 404
         else:
             return usuario.serialize(), 200
+    
+    @classmethod
+    def getInfo(cls):
+        correo = session.get('correo')
+        usuario = Usuario.getInfo(Usuario(correo = correo))
+        if usuario is None:
+            return {'msg': 'Usuario no encontrado'}, 404
+        else:
+            return usuario.serialize(), 200
 
     @classmethod
     def register(cls):                  

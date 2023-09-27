@@ -98,4 +98,19 @@ class Server:
             return None
         except Exception as e:
             raise Exception(e)
+        
+    @classmethod
+    def get_serverUsuarioCreador(cls,id_usuario): 
+        try:                 
+            query="""SELECT s.nombre_servidor FROM servidor s
+                    WHERE id_creador = %s;"""
+            params = (id_usuario,)
+            result = DatabaseConnection.fetch_all(query,params=params)
+            if result is not None:
+                DatabaseConnection.close_connection()
+                return cls(nombre_servidor = result)
+            DatabaseConnection.close_connection()
+            return None
+        except Exception as e:
+            raise Exception(e)
 

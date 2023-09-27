@@ -84,3 +84,18 @@ class Usuario:
             return None
         except Exception as e:
             Exception(e)
+            
+    @classmethod
+    def getInfo(cls, usuario):
+        try:
+            query = """SELECT * FROM tertulia.usuarios 
+            WHERE correo = %(correo)s"""
+            params = usuario.__dict__
+            result = DatabaseConnection.fetch_one(query, params=params)
+            if result is not None:
+                DatabaseConnection.close_connection()
+                return result
+            DatabaseConnection.close_connection()
+            return None
+        except Exception as e:
+            raise Exception(e)
