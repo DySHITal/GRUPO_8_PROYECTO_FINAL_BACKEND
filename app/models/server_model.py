@@ -99,3 +99,13 @@ class Server:
         except Exception as e:
             raise Exception(e)
 
+    @classmethod
+    def del_server(cls, id_usuario, id_servidor):
+        try:
+            query = 'DELETE FROM usuario_servidor WHERE usuario = %s AND servidor = %s'
+            params = (id_usuario, id_servidor)
+            DatabaseConnection.execute_query(query, params=params)
+            DatabaseConnection.close_connection()
+            return None
+        except Exception as e:
+            raise Exception(e)

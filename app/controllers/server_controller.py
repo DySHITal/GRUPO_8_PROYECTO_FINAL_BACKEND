@@ -42,13 +42,21 @@ class ServerController:
         correo = session.get('correo')
         id_usuario = Usuario.get_id_usuario(correo)
         id_servidor = Server.get_id_server(nombre_servidor)
-        print(id_usuario)
-        print(id_servidor)
         server = Server.reg_server(id_usuario, id_servidor)
         if server is not None:
             return {'msg':'Servidor registrado al usuario'}
         else:
             return {'msg':'Ocurrió un problema'}
 
+    @classmethod
+    def delServer(cls, nombre_servidor):
+        correo = session.get('correo')
+        id_server = Server.get_id_server(nombre_servidor)
+        id_usuario = Usuario.get_id_usuario(correo)
+        server = Server.del_server(id_usuario, id_server)
+        if server is not None:
+            return {'msg':'Servidor registrado al usuario'}
+        else:
+            return {'msg':'Ocurrió un problema'}
 
     

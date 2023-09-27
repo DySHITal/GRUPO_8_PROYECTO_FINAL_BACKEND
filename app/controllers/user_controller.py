@@ -23,8 +23,10 @@ class UsuarioController:
             fechas_nacimiento = data.get('fechas_nacimiento'),
             avatar = data.get('avatar')
         )
-        if usuario is not None:
+        if Usuario.is_registered(usuario):
+            return {'msg':'Usuario ya registrado'}, 401
+        try:
             Usuario.register_user(usuario)
             return jsonify({'msg': 'Usuario Registrado exitosamente'}), 200
-        else:
+        except Exception as e:
             return jsonify({'msg', 'Todos los campos deben estar completados'}), 400

@@ -10,3 +10,4 @@ user_bp.route('/servidores_del_usuario', methods=['GET'])(ServerController.getSe
 user_bp.route('/register', methods=['GET','POST'])(UsuarioController.register)
 user_bp.route('/crear_server', methods=['GET','POST'])(ServerController.crearServer)
 user_bp.route('/registrar_db/<string:nombre_servidor>', methods=['POST'])(ServerController.regServer)
+user_bp.route('/eliminar_server/<string:nombre_servidor>', methods=['DELETE'])(ServerController.delServer)
