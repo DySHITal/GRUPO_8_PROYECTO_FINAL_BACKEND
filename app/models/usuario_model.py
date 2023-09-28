@@ -84,3 +84,26 @@ class Usuario:
             return None
         except Exception as e:
             Exception(e)
+            
+    @classmethod
+    def get_info(cls, correo):    
+        try:
+            query = """SELECT * FROM tertulia.usuarios 
+            WHERE correo = %s"""
+            params = (correo,)
+            result = DatabaseConnection.fetch_one(query, params=params)
+            print(result)
+            if result is not None:
+                usuario = cls()  # Crear una instancia vacía de Usuario
+                usuario.nombre = result[1]
+                usuario.apellido = result[2]
+                usuario.alias = result[3]
+                usuario.fechas_nacimiento = result[4]
+                usuario.correo = result[5]
+                # Asignar los valores del resultado a los atributos del usuario
+                DatabaseConnection.close_connection()
+                return usuario
+            DatabaseConnection.close_connection()
+            return None
+        except Exception as e:
+            raise Exception(e)

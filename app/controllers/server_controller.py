@@ -47,6 +47,19 @@ class ServerController:
             return {'msg':'Servidor registrado al usuario'}
         else:
             return {'msg':'Ocurrió un problema'}
+    
+
+    @classmethod
+    def getServersCreador(cls):
+        correo = session.get('correo')
+        print(correo)
+        id_usuario = Usuario.get_id_usuario(correo)
+        print(id_usuario)
+        servers = Server.get_serverUsuarioCreador(id_usuario)
+        if servers is not None:
+            return servers.serialize(), 200
+        else:
+            return {'msg':'No creo ningun servidor'}, 404
 
     @classmethod
     def delServer(cls, nombre_servidor):

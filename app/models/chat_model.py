@@ -37,3 +37,17 @@ class Chat:
             DatabaseConnection.close_connection()
         except Exception as e:
             raise Exception(e)
+        
+    @classmethod
+    def get_mensajesUsuario(cls, id_usuario):
+        try:
+            query = """SELECT m.*
+                       FROM mensajes m
+                       JOIN usuario_mensaje um ON m.id_mensaje = um.id_mensaje
+                       WHERE um.id_usuario = %s"""
+            params = (id_usuario,)
+            result = DatabaseConnection.fetch_all(query, params=params)
+            DatabaseConnection.close_connection()
+            return result
+        except Exception as e:
+            raise Exception(e)
