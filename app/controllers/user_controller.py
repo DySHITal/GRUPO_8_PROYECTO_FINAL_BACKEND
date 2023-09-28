@@ -13,8 +13,10 @@ class UsuarioController:
     
     @classmethod
     def getInfo(cls):
-        correo = session.get('correo')
-        usuario = Usuario.getInfo(Usuario(correo = correo))
+        alias = session.get('correo')
+        print(alias)
+        usuario = Usuario.get_info(alias)
+        print(usuario)
         if usuario is None:
             return {'msg': 'Usuario no encontrado'}, 404
         else:
