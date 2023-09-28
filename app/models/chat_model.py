@@ -42,8 +42,8 @@ class Chat:
     def get_mensajesUsuario(cls, id_usuario):
         try:
             query = """SELECT m.*
-                       FROM mensaje m
-                       JOIN usuario_mensajes um ON m.id_mensaje = um.id_mensaje
+                       FROM mensajes m
+                       JOIN usuario_mensaje um ON m.id_mensaje = um.id_mensaje
                        WHERE um.id_usuario = %s"""
             params = (id_usuario,)
             result = DatabaseConnection.fetch_all(query, params=params)
