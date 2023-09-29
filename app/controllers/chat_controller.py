@@ -23,9 +23,12 @@ class ChatController:
             mensaje = data['data'].get('mensaje'),
             canal = data['data'].get('canal')
         )
+        correo = session.get('correo')
+        id_usuario = Usuario.get_id_usuario(correo)
+        print(id_usuario)
         id_canal = Canales.get_id_canal(message.canal)
         if message is not None:
-            Chat.post_mensajes(message, id_canal)
+            Chat.post_mensajes(message, id_canal,id_usuario)
             return {'msg':'success'}, 200
         else:
             return {'msg':'No hay mensaje'}, 400
@@ -39,3 +42,15 @@ class ChatController:
             return mensajes, 200
         else:
             return {'msg':'Empty'}
+    
+    @classmethod
+    def deleteMensajesUsuario(cls,mensaje_id):
+        print("todobien")
+        print(mensaje_id)
+        
+        mensajes = Chat.delete_mensajesUsuario(mensaje_id)
+        if mensajes is not None:
+            return {'msg':'Mensaje eliminado'}
+        else:
+            return {'msg':'Problema'}    
+    

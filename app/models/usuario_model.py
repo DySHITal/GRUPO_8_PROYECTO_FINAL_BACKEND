@@ -79,6 +79,7 @@ class Usuario:
             if result is not None:
                 DatabaseConnection.close_connection()
                 id_usuario = result[0]
+                print(id_usuario)
                 return id_usuario
             DatabaseConnection.close_connection()
             return None

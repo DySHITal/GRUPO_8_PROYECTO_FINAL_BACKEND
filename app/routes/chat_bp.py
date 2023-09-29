@@ -7,3 +7,4 @@ chat_bp.route('/mensajes/<string:nombre_canal>', methods=['GET'])(ChatController
 chat_bp.route('/mensajes', methods=['POST'])(ChatController.postMensajes)
 
 chat_bp.route('/ruta_mensajes_enviados/<int:id_usuario>',methods=['GET'])(ChatController.getMensajesUsuario)
+chat_bp.route('/eliminar_mensajes_enviados/<int:mensaje_id>',methods=['DELETE'])(ChatController.deleteMensajesUsuario)
