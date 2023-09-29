@@ -94,6 +94,7 @@ class Usuario:
             result = DatabaseConnection.fetch_one(query, params=params)
             if result is not None:
                 usuario = cls()  # Crear una instancia vacía de Usuario
+                usuario.id_usuario=result[0]
                 usuario.nombre = result[1]
                 usuario.apellido = result[2]
                 usuario.alias = result[3]

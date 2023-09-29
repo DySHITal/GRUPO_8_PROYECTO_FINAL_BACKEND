@@ -12,6 +12,6 @@ user_bp.route('/crear_server', methods=['GET','POST'])(ServerController.crearSer
 user_bp.route('/registrar_db/<string:nombre_servidor>', methods=['POST'])(ServerController.regServer)
 user_bp.route('/eliminar_server/<string:nombre_servidor>', methods=['DELETE'])(ServerController.delServer)
 user_bp.route('/ruta_info_usuario', methods=['GET'])(UsuarioController.getInfo)
-user_bp.route('/ruta_servidores_creados', methods=['GET'])(ServerController.getServersCreador)
+user_bp.route('/ruta_servidores_creados/<int:id_usuario>', methods=['GET'])(ServerController.getServersCreador)
 user_bp.route('/upload_img', methods=['POST'])(UsuarioController.uploadImg)
 user_bp.route('/show_img', methods=['GET'])(UsuarioController.showImg)

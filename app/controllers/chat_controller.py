@@ -31,12 +31,8 @@ class ChatController:
             return {'msg':'No hay mensaje'}, 400
         
     @classmethod
-    def getMensajesUsuario(cls):
+    def getMensajesUsuario(cls,id_usuario):
         print("todobien")
-        correo = session.get('correo') 
-        print(correo)
-        print("todobien")
-        id_usuario = Usuario.get_id_usuario(correo)
         print(id_usuario)
         mensajes = Chat.get_mensajesUsuario(id_usuario)
         if mensajes is not None:
