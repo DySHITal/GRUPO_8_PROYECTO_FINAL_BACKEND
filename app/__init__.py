@@ -10,7 +10,7 @@ from .database import DatabaseConnection
 def init_app():
     """Crea y configura la aplicación Flask"""
     app = Flask(__name__, static_folder=Config.STATIC_FOLDER, template_folder=Config.TEMPLATE_FOLDER)
-    CORS(app, supports_credentials=True)
+    CORS(app,origins='http://127.0.0.1:5500', supports_credentials=True)
     app.config.from_object(Config)
     DatabaseConnection.set_config(app.config)
     app.register_blueprint(auth_bp)

@@ -83,7 +83,7 @@ class Usuario:
             DatabaseConnection.close_connection()
             return None
         except Exception as e:
-            Exception(e)
+            raise Exception(e)
             
     @classmethod
     def get_info(cls, correo):    
@@ -95,6 +95,7 @@ class Usuario:
             print(result)
             if result is not None:
                 usuario = cls()  # Crear una instancia vacía de Usuario
+                usuario.id_usuario=result[0]
                 usuario.nombre = result[1]
                 usuario.apellido = result[2]
                 usuario.alias = result[3]

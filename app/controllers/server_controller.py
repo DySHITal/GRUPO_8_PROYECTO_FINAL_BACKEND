@@ -52,10 +52,7 @@ class ServerController:
     
 
     @classmethod
-    def getServersCreador(cls):
-        correo = session.get('correo')
-        print(correo)
-        id_usuario = Usuario.get_id_usuario(correo)
+    def getServersCreador(cls,id_usuario):
         print(id_usuario)
         servers = Server.get_serverUsuarioCreador(id_usuario)
         if servers is not None:
