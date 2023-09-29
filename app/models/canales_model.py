@@ -41,3 +41,14 @@ class Canales:
             return None
         except Exception as e:
             raise Exception(e)
+
+    @classmethod
+    def crear_canal(cls, nombre_canal, id_servidor):
+        try:
+            query = """INSERT INTO canales (nombre_canal, id_servidor)
+            VALUES (%s, %s)"""
+            params = (nombre_canal, id_servidor)
+            DatabaseConnection.execute_query(query, params=params)
+            DatabaseConnection.close_connection()
+        except Exception as e:
+            raise Exception(e)

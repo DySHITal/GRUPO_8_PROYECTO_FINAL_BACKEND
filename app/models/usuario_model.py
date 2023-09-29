@@ -83,7 +83,7 @@ class Usuario:
             DatabaseConnection.close_connection()
             return None
         except Exception as e:
-            Exception(e)
+            raise Exception(e)
             
     @classmethod
     def get_info(cls, correo):    
@@ -92,7 +92,6 @@ class Usuario:
             WHERE correo = %s"""
             params = (correo,)
             result = DatabaseConnection.fetch_one(query, params=params)
-            print(result)
             if result is not None:
                 usuario = cls()  # Crear una instancia vacía de Usuario
                 usuario.nombre = result[1]
@@ -103,6 +102,32 @@ class Usuario:
                 # Asignar los valores del resultado a los atributos del usuario
                 DatabaseConnection.close_connection()
                 return usuario
+            DatabaseConnection.close_connection()
+            return None
+        except Exception as e:
+            raise Exception(e)
+
+    @classmethod
+    def upload_img(cls, usuario):
+        try:
+            query = """UPDATE usuarios 
+            SET avatar = %(avatar)s
+            WHERE id_usuario = %(id_usuario)s"""
+            params = usuario.__dict__
+            DatabaseConnection.execute_query(query, params=params)
+            DatabaseConnection.close_connection()
+        except Exception as e:
+            raise Exception(e)
+
+    @classmethod
+    def show_img(cls, usuario):
+        try:
+            query = 'SELECT avatar FROM usuarios WHERE id_usuario = %(id_usuario)s'
+            params = usuario.__dict__
+            result = DatabaseConnection.fetch_one(query, params=params)
+            if result is not None:
+                DatabaseConnection.close_connection()
+                return cls(avatar = result[0])
             DatabaseConnection.close_connection()
             return None
         except Exception as e:

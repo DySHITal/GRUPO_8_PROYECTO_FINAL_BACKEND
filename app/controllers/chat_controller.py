@@ -1,6 +1,7 @@
 from ..models.chat_model import Chat
 from ..models.canales_model import Canales
 from ..models.usuario_model import Usuario
+from ..models.server_model import Server
 from flask import request, session, jsonify
 
 class ChatController:
